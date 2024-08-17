@@ -8,7 +8,7 @@ import (
 
 // TransactionRoutes is a function that handles all the routes for the transaction
 func (r *routes) TransactionRoutes(rg *gin.RouterGroup) {
-	transaction := rg.Group("/auditorium")
+	transaction := rg.Group("/transaction")
 	transaction.Use(cors.Default())
 
 	// get all transactions

@@ -42,14 +42,14 @@ func (r *routes) ScreeningRoutes(rg *gin.RouterGroup) {
 	screening.GET("/status/:status", controllers.GetScreeningByStatus)
 
 	// get all screenings by movie and date
-	screening.GET("/movie/:movieid/date/:date", controllers.GetScreeningByMovieAndDate)
+	// screening.GET("/movie/:movieid/date/:date", controllers.GetScreeningByMovieAndDate)
 
 	// get all screenings by auditorium and date
-	screening.GET("/auditorium/:auditoriumid/date/:date", controllers.GetScreeningByAuditoriumAndDate)
+	// screening.GET("/auditorium/:auditoriumid/date/:date", controllers.GetScreeningByAuditoriumAndDate)
 
 	// get all screenings by auditorium and time
-	screening.GET("/auditorium/:auditoriumid/time/:time", controllers.GetScreeningByAuditoriumAndTime)
+	// screening.GET("/auditorium/:auditoriumid/time/:time", controllers.GetScreeningByAuditoriumAndTime)
 
 	// get all screenings by movie and auditorium
-	screening.GET("/movie/:movieid/auditorium/:auditoriumid", controllers.GetScreeningByMovieAndAuditorium)
+	// screening.GET("/movie/:movieid/auditorium/:auditoriumid", controllers.GetScreeningByMovieAndAuditorium)
 }

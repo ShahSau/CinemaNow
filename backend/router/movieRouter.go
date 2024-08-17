@@ -8,7 +8,7 @@ import (
 
 // MovieRoutes is a function that handles all the routes for the movie
 func (r *routes) MovieRoutes(rg *gin.RouterGroup) {
-	movieRouteGrouping := rg.Group("/movie")
+	movieRouteGrouping := rg.Group("/movies")
 	movieRouteGrouping.Use(cors.Default())
 
 	// get all movies
@@ -28,9 +28,6 @@ func (r *routes) MovieRoutes(rg *gin.RouterGroup) {
 
 	// search for a movie
 	movieRouteGrouping.GET("/search", controllers.SearchMovie)
-
-	// get all movies by genre
-	movieRouteGrouping.GET("/genre/:genre", controllers.GetMovieByGenre)
 
 	// get all movies by rating
 	movieRouteGrouping.GET("/rating/:rating", controllers.GetMovieByRating)

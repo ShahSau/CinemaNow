@@ -1,6 +1,11 @@
 package controllers
 
-import "github.com/gin-gonic/gin"
+import (
+	"log"
+
+	"github.com/gin-gonic/gin"
+	"golang.org/x/crypto/bcrypt"
+)
 
 // GetAllUsers is a function that returns all the users
 func GetAllUsers(c *gin.Context) {
@@ -35,4 +40,20 @@ func DeleteUser(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"message": "Delete user",
 	})
+}
+
+func ComparePassword(hashedPassword string, password string) (bool, string) {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	if err != nil {
+		return false, "Invalid password"
+	}
+	return true, "Password is valid"
+}
+
+func HashPassword(password string) string {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 14)
+	if err != nil {
+		log.Panic("Error hashing password")
+	}
+	return string(bytes)
 }
