@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 	"time"
 
@@ -101,8 +100,6 @@ func CreateMovie(c *gin.Context) {
 		})
 		return
 	}
-
-	fmt.Println(reqMovie, "reqMovie")
 
 	var movie models.Movie
 

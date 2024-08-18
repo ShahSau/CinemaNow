@@ -29,6 +29,7 @@ func ClientRoutes() {
 
 	// all v1 routes
 	r.MovieRoutes(v)
+	r.MovieDetailsRoutes(v)
 	r.AuthRoutes(v)
 	r.AuditoriumRoutes(v)
 	r.UserRoutes(v)
