@@ -29,6 +29,4 @@ func (r *routes) TicketsRoutes(rg *gin.RouterGroup) {
 	// get all tickets by booking
 	tickets.GET("/booking/:id", controllers.GetTicketByBooking)
 
-	// get all tickets by status
-	tickets.GET("/status/:status", controllers.GetTicketByStatus)
 }

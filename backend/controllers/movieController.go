@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -18,37 +19,44 @@ var movieCollection *mongo.Collection = database.GetCollection(database.DB, "mov
 
 // GetAllMovies is a function that returns all the movies
 func GetAllMovies(c *gin.Context) {
-	var movies []models.Movie
+	recordPerPage, err := strconv.Atoi(c.Query("recordPerPage"))
+	if err != nil || recordPerPage < 1 {
+		recordPerPage = 10
+	}
 
-	cursor, err := movieCollection.Find(c.Request.Context(), bson.D{})
+	page, errp := strconv.Atoi(c.Query("page"))
+	if errp != nil || page < 1 {
+		page = 1
+	}
 
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message":  "Error fetching movies",
-			"status":   http.StatusInternalServerError,
-			"success":  false,
-			"error":    true,
-			"errorMsg": err.Error(),
-		})
+	startIndex := (page - 1) * recordPerPage
+	startIndex, err = strconv.Atoi(c.Query("startIndex"))
+
+	matchStage := bson.D{{Key: "$match", Value: bson.D{{}}}}
+	projectStage := bson.D{
+		{Key: "$project", Value: bson.D{
+			{Key: "title", Value: 1},
+			{Key: "overview", Value: 1},
+			{Key: "release_date", Value: 1},
+			{Key: "poster_path", Value: 1},
+			{Key: "vote_average", Value: 1},
+			{Key: "vote_count", Value: 1},
+		}},
+	}
+
+	record := bson.D{{Key: "$skip", Value: recordPerPage * (page - 1)}}
+	limit := bson.D{{Key: "$limit", Value: recordPerPage}}
+
+	result, errAgg := movieDetailsCollection.Aggregate(c.Request.Context(), mongo.Pipeline{matchStage, projectStage, record, limit})
+
+	if errAgg != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": errAgg.Error()})
 		return
 	}
 
-	defer cursor.Close(c.Request.Context())
-
-	for cursor.Next(c.Request.Context()) {
-		var movie models.Movie
-		cursor.Decode(&movie)
-		movies = append(movies, movie)
-	}
-
-	if err := cursor.Err(); err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{
-			"message":  "Error fetching movies",
-			"status":   http.StatusInternalServerError,
-			"success":  false,
-			"error":    true,
-			"errorMsg": err.Error(),
-		})
+	var movies []bson.M
+	if err := result.All(c.Request.Context(), &movies); err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
