@@ -12,7 +12,7 @@ type Booking struct {
 	UserId        int                `json:"user_id"`
 	SeatId        int                `json:"seat_id"`
 	ScreeningId   int                `json:"screening_id"`
-	Status        int                `json:"status"`
+	Status        bool               `json:"status"`
 	Transaction   Transaction        `json:"transaction,omitempty"`
 	Seat          Seat               `json:"seat"`
 	CreatedAt     time.Time          `json:"created_at,omitempty" bson:"created_at,omitempty"`

@@ -18,7 +18,7 @@ func (r *routes) UserRoutes(rg *gin.RouterGroup) {
 	user.GET("/:id", controllers.GetUser)
 
 	// create a user
-	user.POST("/create", controllers.CreateUser)
+	//user.POST("/create", controllers.CreateUser)
 
 	// update a user
 	user.PUT("/:id", controllers.UpdateUser)

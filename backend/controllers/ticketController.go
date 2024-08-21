@@ -29,8 +29,8 @@ func GetAllTickets(c *gin.Context) {
 		page = 1
 	}
 
-	startIndex := (page - 1) * recordPerPage
-	startIndex, err = strconv.Atoi(c.Query("startIndex"))
+	//startIndex := (page - 1) * recordPerPage
+	//startIndex, err = strconv.Atoi(c.Query("startIndex"))
 
 	matchStage := bson.D{{Key: "$match", Value: bson.D{{}}}}
 	projectStage := bson.D{{Key: "$project", Value: bson.D{

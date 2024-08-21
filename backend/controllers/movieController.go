@@ -29,9 +29,6 @@ func GetAllMovies(c *gin.Context) {
 		page = 1
 	}
 
-	startIndex := (page - 1) * recordPerPage
-	startIndex, err = strconv.Atoi(c.Query("startIndex"))
-
 	matchStage := bson.D{{Key: "$match", Value: bson.D{{}}}}
 	projectStage := bson.D{
 		{Key: "$project", Value: bson.D{
@@ -64,6 +61,9 @@ func GetAllMovies(c *gin.Context) {
 		"message": "All movies",
 		"movies":  movies,
 		"status":  http.StatusOK,
+		"page":    page,
+		"record":  recordPerPage,
+		"total":   len(movies),
 		"success": true,
 		"error":   false,
 	})
@@ -308,6 +308,7 @@ func SearchMovie(c *gin.Context) {
 			"success":  false,
 			"error":    true,
 			"errorMsg": err.Error(),
+			"movies":   movies,
 		})
 		return
 	}

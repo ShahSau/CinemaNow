@@ -31,7 +31,7 @@ func GetAllMovieDetails(c *gin.Context) {
 	}
 
 	startIndex := (page - 1) * recordPerPage
-	startIndex, err = strconv.Atoi(c.Query("startIndex"))
+	startIndex, _ = strconv.Atoi(c.Query("startIndex"))
 
 	matchStage := bson.D{{Key: "$match", Value: bson.D{{}}}}
 	projectStage := bson.D{
@@ -205,7 +205,7 @@ func UpdateMovieDetail(c *gin.Context) {
 		return
 	}
 
-	id, _ := c.Param("id")
+	id := c.Param("id")
 
 	searchedMovieDetails, err := movieDetailsCollection.Find(c.Request.Context(), bson.M{"movie_id": id})
 	if err != nil {
