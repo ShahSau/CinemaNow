@@ -2,19 +2,21 @@ package models
 
 import (
 	"time"
+
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // Auditorium is a struct that represents the auditorium model
 type Auditorium struct {
-	Id      int    `gorm:"primary_key" json:"id"`
-	Name    string `gorm:"column:name" json:"name"`
-	MovieID string `gorm:"column:cinema_id" json:"movie_id"`
-	NoSeats int    `gorm:"column:no_seats" json:"no_seats"`
-	Rows    int    `gorm:"column:rows" json:"rows"`
-	Columns int    `gorm:"column:columns" json:"columns"`
+	ID      primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	Name    string             `json:"name" validate:"required"`
+	MovieID string             `json:"movie_id" validate:"required"`
+	NoSeats int                `json:"no_seats" validate:"required"`
+	Rows    int                `json:"rows" validate:"required"`
+	Columns int                `json:"columns" validate:"required"`
 
-	Seats         []Seat `gorm:"foreignKey:AuditoriumId" json:"seats"`
-	SelectedSeats []Seat `json:"selected_seats"`
+	Seats         []Seat `json:"seats" bson:"seats" validate:"required"`
+	SelectedSeats []Seat `json:"selected_seats" bson:"selected_seats" validate:"required"`
 
 	CreatedAt time.Time `json:"created_at,omitempty" bson:"created_at,omitempty"`
 	UpdatedAt time.Time `json:"updated_at,omitempty" bson:"updated_at,omitempty"`
