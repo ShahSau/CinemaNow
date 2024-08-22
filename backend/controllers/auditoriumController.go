@@ -230,7 +230,7 @@ func UpdateAuditorium(c *gin.Context) {
 	}
 	auditorium.UpdatedAt, _ = time.Parse(time.RFC3339, time.Now().Format(time.RFC3339))
 
-	_, err = auditoriumCollection.ReplaceOne(c.Request.Context(), bson.M{"_id": auditoriumID}, auditorium)
+	_, err = auditoriumCollection.UpdateOne(c.Request.Context(), bson.M{"_id": auditoriumID}, auditorium)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
