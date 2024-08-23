@@ -38,7 +38,4 @@ func (r *routes) TransactionRoutes(rg *gin.RouterGroup) {
 	// get all transactions by status
 	transaction.GET("/status/:status", controllers.GetTransactionByStatus)
 
-	// get all transactions by date
-	transaction.GET("/date/:date", controllers.GetTransactionByDate)
-
 }

@@ -8,6 +8,6 @@ type Transaction struct {
 	Quantity int       `json:"quantity" bson:"quantity" validate:"required"`
 	Total    float64   `json:"total" bson:"total" validate:"required"`
 	Paid     bool      `json:"paid" bson:"paid" validate:"required"`
-	Ticket   Ticket    `json:"ticket,omitempty" bson:"ticket,omitempty"`
+	Ticket   []Ticket  `json:"ticket,omitempty" bson:"ticket,omitempty"`
 	Booking  []Booking `json:"booking,omitempty" bson:"booking,omitempty"`
 }
