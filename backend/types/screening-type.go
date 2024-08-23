@@ -13,8 +13,8 @@ type Screening struct {
 	CinemaId     int                `json:"cinema_id" validate:"required"`
 	MovieId      int                `json:"movie_id" validate:"required"`
 	StartTime    time.Time          `json:"start_time" validate:"required"`
-	Auditorium   Auditorium         `json:"auditorium"`
-	Theater      Theater            `json:"theater"`
-	Movie        Movie              `json:"movie"`
+	Auditorium   []Auditorium       `json:"auditorium"`
+	Theater      []Theater          `json:"theater"`
+	Movie        []Movie            `json:"movie"`
 	Bookable     bool               `json:"bookable"`
 }
